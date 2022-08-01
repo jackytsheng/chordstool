@@ -12,14 +12,42 @@ Chart.defaults.plugins.datalabels = {
   formatter: (_, context) => context.chart.data.labels![context.dataIndex],
 };
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
 const ChordWheel: NextPage = () => {
-  const highlight = 'rgba(223, 65, 86, 0.471)';
-  const subHighlight = 'rgba(88, 158, 212, 0.471)';
+  const highlight = 'rgba(223, 65, 86, 0.343)';
+  const subHighlight = 'rgba(88, 158, 212, 0.289)';
   const highlighttext = '#f2f2f2';
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [spin, setSpin] = useState(0);
+
+  const spinClockwise = () => {
+    setSpin(spin + 1);
+    setCurrentIndex((currentIndex || 12) - 1);
+  };
+  const spinAntiClockwise = () => {
+    setSpin(spin - 1);
+    setCurrentIndex((currentIndex + 1) % 12);
+  };
+
+  const keys = [
+    'C',
+    'G',
+    'D',
+    'A',
+    ' E\n(F♭)',
+    ' B\n(C♭)',
+    ' G♭\n(F♯)',
+    ' D♭\n(C♯)',
+    ' A♭\n(G♯)',
+    'E♭',
+    'B♭',
+    'F',
+  ];
+
   return (
     <div className='text-gray-600 min-w-screen min-h-screen dark:text-white dark:bg-gray-900'>
       <Head>
@@ -30,7 +58,8 @@ const ChordWheel: NextPage = () => {
         <section className='relative flex z-50 justify-center items-center'>
           <button
             type='button'
-            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center'
+            onClick={spinAntiClockwise}
+            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-cente ml-5'
           >
             <svg
               className='w-6 h-6'
@@ -44,28 +73,28 @@ const ChordWheel: NextPage = () => {
                 clipRule='evenodd'
               />
             </svg>
-            <span className='px-2 text-base'>Subominant</span>
+            <span className='px-2 text-base'>Dominant</span>
             <span className='sr-only'>Left Arrow</span>
           </button>
           <div className='mx-4 bg-slate-500 border-none text-white text-xl font-bold shadow-lg shadow-slate-500/50 py-2 px-5 border rounded-lg'>
-            C
+            {keys[currentIndex]}
           </div>
           <button
             type='button'
-            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-200 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-5'
+            onClick={spinClockwise}
+            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-200 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center'
           >
-            <span className='px-2 text-base'>Dominant</span>
+            <span className='px-2 text-base'>Subdominant</span>
             <svg
-              aria-hidden='true'
               className='w-6 h-6'
               fill='currentColor'
               viewBox='0 0 20 20'
               xmlns='http://www.w3.org/2000/svg'
             >
               <path
-                fill-rule='evenodd'
+                fillRule='evenodd'
                 d='M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z'
-                clip-rule='evenodd'
+                clipRule='evenodd'
               ></path>
             </svg>
             <span className='sr-only'>Right Arrow</span>
@@ -148,7 +177,7 @@ const ChordWheel: NextPage = () => {
           <div className='absolute w-full h-full'>
             <Doughnut
               options={{
-                rotation: 15,
+                rotation: 15 + 30 * spin,
                 cutout: '75%',
                 radius: 300 * SCALE,
                 plugins: {
@@ -257,7 +286,7 @@ const ChordWheel: NextPage = () => {
           <div className='absolute w-full h-full'>
             <Doughnut
               options={{
-                rotation: 7.5,
+                rotation: 7.5 + 30 * spin,
                 cutout: '66.66666666667%',
                 radius: 225 * SCALE,
               }}
@@ -392,7 +421,7 @@ const ChordWheel: NextPage = () => {
           <div className='absolute w-full h-full'>
             <Doughnut
               options={{
-                rotation: 15,
+                rotation: 15 + 30 * spin,
                 cutout: '53.33333333333%',
                 radius: 150 * SCALE,
                 plugins: {
