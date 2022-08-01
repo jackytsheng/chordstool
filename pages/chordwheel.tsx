@@ -3,11 +3,14 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, ArcElement } from 'chart.js';
 Chart.register([ArcElement, ChartDataLabels]);
 const SCALE = 1.4;
+const SLATE_DARK = '#64748b';
+const SLATE_LIGHT = '#cbd5e1';
 Chart.defaults.plugins.datalabels = {
   font: {
     size: 14 * SCALE,
     weight: 'bold',
   },
+  color: SLATE_DARK,
   display: (context) => context.dataset.data![context.dataIndex] === 1,
   formatter: (_, context) => context.chart.data.labels![context.dataIndex],
 };
@@ -17,9 +20,9 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 const ChordWheel: NextPage = () => {
-  const highlight = 'rgba(223, 65, 86, 0.343)';
-  const subHighlight = 'rgba(88, 158, 212, 0.289)';
-  const highlighttext = '#1c1b1b';
+  const highlight = '#f43f5d58';
+  const subHighlight = '#06b6d458';
+  const highlighttext = '#1e293b';
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [spin, setSpin] = useState(0);
@@ -49,7 +52,7 @@ const ChordWheel: NextPage = () => {
   ];
 
   return (
-    <div className='text-gray-600 min-w-screen min-h-screen dark:text-white dark:bg-gray-900'>
+    <div className='text-slate-500 min-w-screen min-h-screen'>
       <Head>
         <title>Chord Wheel</title>
         <link rel='icon' href='/favicon.ico' />
@@ -219,7 +222,7 @@ const ChordWheel: NextPage = () => {
                       'rgba(255, 194, 102, 0.2)',
                       'rgba(255, 185, 64, 0.2)',
                     ],
-                    borderColor: ['#bdbdbd'],
+                    borderColor: [SLATE_LIGHT],
                     borderWidth: 1,
                   },
                 ],
@@ -346,7 +349,7 @@ const ChordWheel: NextPage = () => {
                       'rgba(255, 150, 64, 0.2)',
                     ],
 
-                    borderColor: ['#bdbdbd'],
+                    borderColor: [SLATE_LIGHT],
                     borderWidth: 1,
                   },
                 ],
@@ -463,7 +466,7 @@ const ChordWheel: NextPage = () => {
                       'rgba(255, 194, 102, 0.2)',
                       'rgba(255, 150, 64, 0.2)',
                     ],
-                    borderColor: ['#bdbdbd'],
+                    borderColor: [SLATE_LIGHT],
                     borderWidth: 1,
                   },
                 ],
