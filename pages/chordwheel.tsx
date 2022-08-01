@@ -2,7 +2,7 @@ import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, ArcElement } from 'chart.js';
 Chart.register([ArcElement, ChartDataLabels]);
-const SCALE = 1;
+const SCALE = 2;
 Chart.defaults.plugins.datalabels = {
   font: {
     size: 14 * SCALE,
@@ -20,6 +20,7 @@ const ChordWheel: NextPage = () => {
   const highlight = 'rgba(223, 65, 86, 0.471)';
   const subHighlight = 'rgba(88, 158, 212, 0.471)';
   const highlighttext = '#f2f2f2';
+  const length = 200 * SCALE + 2;
   return (
     <div className='flex min-h-screen  text-gray-600 dark:text-white dark:bg-gray-900'>
       <Head>
@@ -27,7 +28,7 @@ const ChordWheel: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='w-screen h-screen flex justify-center items-center'>
-        <div className='absolute w-[202px] h-[202px]'>
+        <div className='absolute w-full h-full'>
           <Doughnut
             options={{
               rotation: 15,
@@ -38,9 +39,13 @@ const ChordWheel: NextPage = () => {
                   align: 'start',
                   anchor: 'end',
                   offset: 10,
-                  font: {
-                    size: 13 * SCALE,
+                  font: (context) => {
+                    const size = context.dataIndex === 11 ? 20 : 13;
+                    return {
+                      size: size * SCALE,
+                    };
                   },
+                  // rotation: (context) => (context.dataIndex === 11 ? -90 : 0),
                 },
               },
             }}
@@ -57,7 +62,7 @@ const ChordWheel: NextPage = () => {
                 '3♭',
                 '2♭',
                 '♭',
-                ' ',
+                ' ▲ \nKey',
               ],
               datasets: [
                 {
@@ -68,11 +73,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute z-20 w-[602px] h-[602px]'>
+        <div className='absolute z-20 w-full h-full'>
           <Doughnut
             options={{
               rotation: -15,
-              cutout: 225,
+              cutout: '75%',
               radius: 300 * SCALE,
               plugins: {
                 datalabels: {
@@ -96,11 +101,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute w-[602px] h-[602px]'>
+        <div className='absolute w-full h-full'>
           <Doughnut
             options={{
               rotation: 15,
-              cutout: 225,
+              cutout: '75%',
               radius: 300 * SCALE,
               plugins: {
                 datalabels: {
@@ -149,11 +154,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute z-20 w-[452px] h-[452px]'>
+        <div className='absolute z-20 w-full h-full'>
           <Doughnut
             options={{
               rotation: -22.5,
-              cutout: 150,
+              cutout: '66.66666666667%',
               radius: 225 * SCALE,
               plugins: {
                 datalabels: {
@@ -205,11 +210,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute w-[452px] h-[452px]'>
+        <div className='absolute w-full h-full'>
           <Doughnut
             options={{
               rotation: 7.5,
-              cutout: 150,
+              cutout: '66.66666666667%',
               radius: 225 * SCALE,
             }}
             data={{
@@ -276,11 +281,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute z-20 w-[302px] h-[302px]'>
+        <div className='absolute z-20 w-full h-full'>
           <Doughnut
             options={{
               rotation: -45,
-              cutout: 80,
+              cutout: '53.33333333333%',
               radius: 150 * SCALE,
               plugins: {
                 datalabels: {
@@ -340,11 +345,11 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute w-[302px] h-[302px]'>
+        <div className='absolute w-full h-full'>
           <Doughnut
             options={{
               rotation: 15,
-              cutout: 80,
+              cutout: '53.33333333333%',
               radius: 150 * SCALE,
               plugins: {
                 datalabels: {
