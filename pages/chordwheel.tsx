@@ -2,7 +2,7 @@ import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, ArcElement } from 'chart.js';
 Chart.register([ArcElement, ChartDataLabels]);
-const SCALE = 1.2;
+const SCALE = 1.4;
 Chart.defaults.plugins.datalabels = {
   font: {
     size: 14 * SCALE,
@@ -19,7 +19,7 @@ import Head from 'next/head';
 const ChordWheel: NextPage = () => {
   const highlight = 'rgba(223, 65, 86, 0.343)';
   const subHighlight = 'rgba(88, 158, 212, 0.289)';
-  const highlighttext = '#f2f2f2';
+  const highlighttext = '#1c1b1b';
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [spin, setSpin] = useState(0);
@@ -82,7 +82,7 @@ const ChordWheel: NextPage = () => {
           <button
             type='button'
             onClick={spinClockwise}
-            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-200 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center'
+            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center'
           >
             <span className='px-2 text-base'>Subdominant</span>
             <svg
@@ -100,7 +100,7 @@ const ChordWheel: NextPage = () => {
             <span className='sr-only'>Right Arrow</span>
           </button>
         </section>
-        <section className='relative w-full mt-[-200px]'>
+        <section className='relative mt-[-10rem]'>
           <div className='absolute w-full h-full'>
             <Doughnut
               options={{
@@ -118,7 +118,6 @@ const ChordWheel: NextPage = () => {
                         size: size * SCALE,
                       };
                     },
-                    // rotation: (context) => (context.dataIndex === 11 ? -90 : 0),
                   },
                 },
               }}
@@ -157,13 +156,13 @@ const ChordWheel: NextPage = () => {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 9 * SCALE,
+                      size: 6 * SCALE,
                     },
                   },
                 },
               }}
               data={{
-                labels: ['m7°/5♭ \n\n\n\n\n vii°', 'not'],
+                labels: ['m7°/5♭ \n\n\n\n\n\n\n\n vii°', 'not'],
                 datasets: [
                   {
                     data: [1, 11],
@@ -242,7 +241,7 @@ const ChordWheel: NextPage = () => {
                         case 1:
                           return 5;
                         case 2:
-                          return 3;
+                          return 5;
                         default:
                           return 0;
                       }
@@ -252,7 +251,7 @@ const ChordWheel: NextPage = () => {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 9 * SCALE,
+                      size: 6 * SCALE,
                     },
                     rotation: (context) => {
                       const index = context.dataIndex;
@@ -263,9 +262,9 @@ const ChordWheel: NextPage = () => {
               }}
               data={{
                 labels: [
-                  '  m7 m9 m11 \n\n\n\n\nii',
-                  'm7 m9\nm11 m6\n\n\n\nvi',
-                  'm7   \n\n\n\n\niii   ',
+                  '  m7 m9 m11\n\n\n\n\n\n\n\nii',
+                  'm7 m9 m11 m6\n\n\n\n\n\n\n\nvi',
+                  'm7   \n\n\n\n\n\n\n\niii   ',
                   'not',
                 ],
                 datasets: [
@@ -367,13 +366,13 @@ const ChordWheel: NextPage = () => {
                     offset: (context) => {
                       switch (context.dataIndex) {
                         case 0:
-                          return -9;
+                          return -19;
                         case 1:
-                          return 3;
+                          return 7;
                         case 2:
-                          return -5;
+                          return -8;
                         default:
-                          return -2;
+                          return 0;
                       }
                     },
                     anchor: 'end',
@@ -381,7 +380,7 @@ const ChordWheel: NextPage = () => {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 9 * SCALE,
+                      size: 6 * SCALE,
                     },
                     rotation: (context) => {
                       const index = context.dataIndex;
@@ -392,12 +391,12 @@ const ChordWheel: NextPage = () => {
               }}
               data={{
                 labels: [
-                  'Maj7 Maj9\n Maj13 or 6\n\n\n\nIV',
-                  'Maj7 Maj9\nMaj11 Maj13\n\n\n\nI',
-                  '7 9 11 \nsus4 13\n\n\n\nV',
-                  '7 sus4\n\n\n\nII\n(V of V)',
+                  'Maj7 Maj9 Maj13 or 6\n\n\n\n\n\n\n\nIV',
+                  'Maj7 Maj9 Maj11 Maj13\n\n\n\n\n\n\n\nI',
+                  '7 9 11 sus4 13\n\n\n\n\n\n\n\nV',
+                  '7 sus4\n\n\n\n\n\n\nII\n(V of V)',
                   'not',
-                  '7 sus4\n\n\n\nIII\n(V of vi)',
+                  '7 sus4\n\n\n\n\n\n\nIII\n(V of vi)',
                   'not',
                 ],
                 datasets: [
