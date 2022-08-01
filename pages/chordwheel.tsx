@@ -1,20 +1,25 @@
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import 'chartjs-plugin-labels';
 import { Chart, ArcElement } from 'chart.js';
 Chart.register([ArcElement, ChartDataLabels]);
 const SCALE = 1;
 Chart.defaults.plugins.datalabels = {
   font: {
     size: 14 * SCALE,
+    weight: 'bold',
   },
+  display: (context) => context.dataset.data![context.dataIndex] === 1,
   formatter: (_, context) => context.chart.data.labels![context.dataIndex],
 };
 
 import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+
 const ChordWheel: NextPage = () => {
+  const highlight = 'rgba(223, 65, 86, 0.471)';
+  const subHighlight = 'rgba(88, 158, 212, 0.471)';
+  const highlighttext = '#f2f2f2';
   return (
     <div className='flex min-h-screen  text-gray-600 dark:text-white dark:bg-gray-900'>
       <Head>
@@ -45,9 +50,9 @@ const ChordWheel: NextPage = () => {
                 '2♯',
                 '3♯',
                 '4♯',
-                '7♭/\n5♯',
-                '6♭/\n6♯',
-                '5♭/\n7♯',
+                ' 7♭\n(5♯)',
+                ' 6♭\n(6♯)',
+                ' 5♭\n(7♯)',
                 '4♭',
                 '3♭',
                 '2♭',
@@ -71,19 +76,21 @@ const ChordWheel: NextPage = () => {
               radius: 300 * SCALE,
               plugins: {
                 datalabels: {
-                  display: false,
+                  color: highlighttext,
+                  textAlign: 'center',
+                  font: {
+                    size: 9 * SCALE,
+                  },
                 },
               },
             }}
             data={{
+              labels: ['m7°/5♭ \n\n\n\n\n vii°', 'not'],
               datasets: [
                 {
                   data: [1, 11],
                   borderWidth: 0,
-                  backgroundColor: [
-                    'rgba(86, 227, 255, 0.445)',
-                    'rgba(255, 99, 125, 0)',
-                  ],
+                  backgroundColor: [highlight, 'rgba(255, 99, 125, 0)'],
                 },
               ],
             }}
@@ -109,9 +116,9 @@ const ChordWheel: NextPage = () => {
                 'C♯°',
                 'G♯°',
                 'D♯°',
-                'B♭°/\nA♯°',
-                'F°/\nE♯°',
-                'C°/\nB♯°',
+                '  B♭°\n(A♯°)',
+                '  F°\n(E♯°)',
+                '  C°\n(B♯°)',
                 'G°',
                 'D°',
                 'A°',
@@ -142,13 +149,68 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
+        <div className='absolute z-20 w-[452px] h-[452px]'>
+          <Doughnut
+            options={{
+              rotation: -22.5,
+              cutout: 150,
+              radius: 225 * SCALE,
+              plugins: {
+                datalabels: {
+                  offset: (context) => {
+                    switch (context.dataIndex) {
+                      case 0:
+                        return -1;
+                      case 1:
+                        return 5;
+                      case 2:
+                        return 3;
+                      default:
+                        return 0;
+                    }
+                  },
+                  anchor: 'end',
+                  align: 'start',
+                  color: highlighttext,
+                  textAlign: 'center',
+                  font: {
+                    size: 9 * SCALE,
+                  },
+                  rotation: (context) => {
+                    const index = context.dataIndex;
+                    return 15 * (index - 1);
+                  },
+                },
+              },
+            }}
+            data={{
+              labels: [
+                '  m7 m9 m11 \n\n\n\n\nii',
+                'm7 m9\nm11 m6\n\n\n\nvi',
+                'm7   \n\n\n\n\niii   ',
+                'not',
+              ],
+              datasets: [
+                {
+                  data: [1, 1, 1, 21],
+                  backgroundColor: [
+                    highlight,
+                    highlight,
+                    highlight,
+                    'rgba(255, 99, 125, 0)',
+                  ],
+                  borderWidth: 0,
+                },
+              ],
+            }}
+          />
+        </div>
         <div className='absolute w-[452px] h-[452px]'>
           <Doughnut
             options={{
               rotation: 7.5,
               cutout: 150,
               radius: 225 * SCALE,
-              plugins: {},
             }}
             data={{
               labels: [
@@ -160,14 +222,14 @@ const ChordWheel: NextPage = () => {
                 'C♯m',
                 'F♯m',
                 'G♯m',
-                'D♭m/\nC♯m',
-                'E♭m/\nD♯m',
-                'A♭m/\nG♯m',
-                'B♭m/\nA♯m',
-                'E♭m/\nD♯m',
-                'Fm/\nE♯m',
-                'B♭m/\nA♯m',
-                'Cm/\nB♯m',
+                ' D♭m\n(C♯m)',
+                ' E♭m\n(D♯m)',
+                ' A♭m\n(G♯m)',
+                ' B♭m\n(A♯m)',
+                ' E♭m\n(D♯m)',
+                ' Fm\n(E♯m)',
+                ' B♭m\n(A♯m)',
+                ' Cm\n(B♯m)',
                 'Fm',
                 'Gm',
                 'Cm',
@@ -214,7 +276,71 @@ const ChordWheel: NextPage = () => {
             }}
           />
         </div>
-        <div className='absolute w-[302px] h-[302p]'>
+        <div className='absolute z-20 w-[302px] h-[302px]'>
+          <Doughnut
+            options={{
+              rotation: -45,
+              cutout: 80,
+              radius: 150 * SCALE,
+              plugins: {
+                datalabels: {
+                  display: (context) =>
+                    context.chart.data.labels![context.dataIndex] !== 'not',
+                  offset: (context) => {
+                    switch (context.dataIndex) {
+                      case 0:
+                        return -9;
+                      case 1:
+                        return 3;
+                      case 2:
+                        return -5;
+                      default:
+                        return -2;
+                    }
+                  },
+                  anchor: 'end',
+                  align: 'start',
+                  color: highlighttext,
+                  textAlign: 'center',
+                  font: {
+                    size: 9 * SCALE,
+                  },
+                  rotation: (context) => {
+                    const index = context.dataIndex;
+                    return 30 * (index - 1);
+                  },
+                },
+              },
+            }}
+            data={{
+              labels: [
+                'Maj7 Maj9\n Maj13 or 6\n\n\n\nIV',
+                'Maj7 Maj9\nMaj11 Maj13\n\n\n\nI',
+                '7 9 11 \nsus4 13\n\n\n\nV',
+                '7 sus4\n\n\n\nII\n(V of V)',
+                'not',
+                '7 sus4\n\n\n\nIII\n(V of vi)',
+                'not',
+              ],
+              datasets: [
+                {
+                  data: [1, 1, 1, 1, 1, 1, 6],
+                  borderWidth: 0,
+                  backgroundColor: [
+                    highlight,
+                    highlight,
+                    highlight,
+                    subHighlight,
+                    'rgba(255, 99, 125, 0)',
+                    subHighlight,
+                    'rgba(255, 99, 125, 0)',
+                  ],
+                },
+              ],
+            }}
+          />
+        </div>
+        <div className='absolute w-[302px] h-[302px]'>
           <Doughnut
             options={{
               rotation: 15,
@@ -233,11 +359,11 @@ const ChordWheel: NextPage = () => {
                 'G',
                 'D',
                 'A',
-                'F♭/\nE',
-                'C♭/\nB',
-                'G♭/\nF♯',
-                'D♭/\nC♯',
-                'A♭/\nG♯',
+                ' E\n(F♭)',
+                ' B\n(C♭)',
+                ' G♭\n(F♯)',
+                ' D♭\n(C♯)',
+                ' A♭\n(G♯)',
                 'E♭',
                 'B♭',
                 'F',
