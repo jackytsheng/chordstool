@@ -5,6 +5,7 @@ Chart.register([ArcElement, ChartDataLabels]);
 const SCALE = 1.4;
 const SLATE_DARK = '#64748b';
 const SLATE_LIGHT = '#cbd5e1';
+Chart.defaults.events = [];
 Chart.defaults.plugins.datalabels = {
   font: {
     size: 14 * SCALE,
