@@ -56,11 +56,11 @@ const ChordWheel: NextPage = () => {
     'G',
     'D',
     'A',
-    ' E\n(F♭)',
-    ' B\n(C♭)',
-    ' G♭\n(F♯)',
-    ' D♭\n(C♯)',
-    ' A♭\n(G♯)',
+    ' E (F♭)',
+    ' B (C♭)',
+    ' G♭ (F♯)',
+    ' D♭ (C♯)',
+    ' A♭ (G♯)',
     'E♭',
     'B♭',
     'F',
@@ -78,7 +78,7 @@ const ChordWheel: NextPage = () => {
           <button
             type='button'
             onClick={spinAntiClockwise}
-            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-cente ml-5'
+            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-1 lg:p-2.5 text-center inline-flex items-cente ml-5'
           >
             <svg
               className='w-6 h-6'
@@ -95,13 +95,13 @@ const ChordWheel: NextPage = () => {
             <span className='px-2 text-base'>Dominant</span>
             <span className='sr-only'>Left Arrow</span>
           </button>
-          <div className='mx-4 bg-slate-500 border-none text-white text-xl font-bold shadow-lg shadow-slate-500/50 py-2 px-5 border rounded-lg'>
+          <div className='mx-4 bg-slate-500 border-none text-white text-l md:text-xl font-bold shadow-lg shadow-slate-500/50 py-2 px-5 border rounded-lg'>
             {keys[currentIndex]}
           </div>
           <button
             type='button'
             onClick={spinClockwise}
-            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center'
+            className='shadow-lg shadow-slate-500/50 text-white bg-slate-500 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-full text-sm  p-1 lg:p-2.5 text-center inline-flex items-center'
           >
             <span className='px-2 text-base'>Subdominant</span>
             <svg
