@@ -15,7 +15,7 @@ const Nav = ({ title, coloredText }: NavProps) => {
       </span>
       <div className='flex items-center gap-5'>
         <div className='cursor-pointer flex gap-1 items-center hover:text-blue-400 dark:hover:text-blue-300'>
-          <span className='text-base'>More Tools Coming Soon ... </span>
+          <span className='text-base'>More Tools On The Way ... </span>
           <Svg icon={Icon.Truck} />
         </div>
       </div>
