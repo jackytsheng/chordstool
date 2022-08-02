@@ -177,6 +177,27 @@ const close = (
   </svg>
 );
 
+const truck = (
+  <svg
+    className='w-6 h-6'
+    fill='currentColor'
+    viewBox='0 0 20 20'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path d='M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z' />
+    <path d='M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z' />
+  </svg>
+);
+const threeDots = (
+  <svg
+    className='w-6 h-6'
+    fill='currentColor'
+    viewBox='0 0 20 20'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path d='M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z' />
+  </svg>
+);
 export enum Icon {
   Sun,
   Moon,
@@ -191,6 +212,8 @@ export enum Icon {
   Logout,
   Login,
   Close,
+  ThreeDots,
+  Truck,
 }
 const Svg = ({ icon }: SvgProps) => {
   let iconToBeRendered;
@@ -234,8 +257,14 @@ const Svg = ({ icon }: SvgProps) => {
     case Icon.Close:
       iconToBeRendered = close;
       break;
+    case Icon.Truck:
+      iconToBeRendered = truck;
+      break;
+    case Icon.ThreeDots:
+      iconToBeRendered = threeDots;
+      break;
     default:
-      iconToBeRendered = sun;
+      iconToBeRendered = threeDots;
   }
 
   return iconToBeRendered;

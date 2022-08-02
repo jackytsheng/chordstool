@@ -1,32 +1,23 @@
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, ArcElement } from 'chart.js';
-Chart.register([ArcElement, ChartDataLabels]);
-const SCALE = 1.4;
-const SLATE_DARK = '#64748b';
-const SLATE_LIGHT = '#cbd5e1';
-Chart.defaults.events = [];
-Chart.defaults.plugins.datalabels = {
-  font: {
-    size: 14 * SCALE,
-    weight: 'bold',
-  },
-  color: SLATE_DARK,
-  display: (context) => context.dataset.data![context.dataIndex] === 1,
-  formatter: (_, context) => context.chart.data.labels![context.dataIndex],
-};
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Nav from '../components/Nav';
+import useWindowSize from '../hooks/useScreenSize';
 
 const ChordWheel: NextPage = () => {
+  const SLATE_DARK = '#64748b';
+  const SLATE_LIGHT = '#cbd5e1';
   const highlight = '#f43f5d58';
   const subHighlight = '#06b6d458';
   const highlighttext = '#1e293b';
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [spin, setSpin] = useState(0);
+  const [Scale, setScale] = useState(0.7);
+  const { width } = useWindowSize();
 
   const spinClockwise = () => {
     setSpin(spin + 1);
@@ -36,6 +27,29 @@ const ChordWheel: NextPage = () => {
     setSpin(spin - 1);
     setCurrentIndex((currentIndex + 1) % 12);
   };
+
+  useEffect(() => {
+    console.log(width);
+    if (width > 1080) {
+      setScale(1.6);
+    } else if (width > 768) {
+      setScale(1.2);
+    } else {
+      setScale(0.7);
+    }
+  }, [width]);
+
+  Chart.defaults.plugins.datalabels = {
+    font: {
+      size: 14 * Scale,
+      weight: 'bold',
+    },
+    color: SLATE_DARK,
+    display: (context) => context.dataset.data![context.dataIndex] === 1,
+    formatter: (_, context) => context.chart.data.labels![context.dataIndex],
+  };
+  Chart.register([ArcElement, ChartDataLabels]);
+  Chart.defaults.events = [];
 
   const keys = [
     'C',
@@ -53,13 +67,14 @@ const ChordWheel: NextPage = () => {
   ];
 
   return (
-    <div className='text-slate-500 min-w-screen min-h-screen'>
+    <div className='text-slate-500'>
       <Head>
         <title>Chord Wheel</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='pt-6'>
-        <section className='relative flex z-50 justify-center items-center'>
+      <main className='pt-20 flex justify-center flex-col items-center gap-5 lg:gap-2'>
+        <Nav title={'Chord'} coloredText={'Wheel'} />
+        <section className='flex justify-center items-center'>
           <button
             type='button'
             onClick={spinAntiClockwise}
@@ -104,13 +119,13 @@ const ChordWheel: NextPage = () => {
             <span className='sr-only'>Right Arrow</span>
           </button>
         </section>
-        <section className='relative mt-[-10rem]'>
+        <section className='relative w-[420px] md:w-[720px] lg:w-[960px]'>
           <div className='absolute w-full h-full'>
             <Doughnut
               options={{
                 rotation: 15,
                 cutout: 0,
-                radius: 80 * SCALE,
+                radius: 80 * Scale,
                 plugins: {
                   datalabels: {
                     align: 'start',
@@ -119,7 +134,7 @@ const ChordWheel: NextPage = () => {
                     font: (context) => {
                       const size = context.dataIndex === 11 ? 20 : 13;
                       return {
-                        size: size * SCALE,
+                        size: size * Scale,
                       };
                     },
                   },
@@ -154,13 +169,13 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: -15,
                 cutout: '75%',
-                radius: 300 * SCALE,
+                radius: 300 * Scale,
                 plugins: {
                   datalabels: {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 6 * SCALE,
+                      size: 6 * Scale,
                     },
                   },
                 },
@@ -182,11 +197,11 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: 15 + 30 * spin,
                 cutout: '75%',
-                radius: 300 * SCALE,
+                radius: 300 * Scale,
                 plugins: {
                   datalabels: {
                     font: {
-                      size: 20 * SCALE,
+                      size: 20 * Scale,
                     },
                   },
                 },
@@ -235,17 +250,17 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: -22.5,
                 cutout: '66.66666666667%',
-                radius: 225 * SCALE,
+                radius: 225 * Scale,
                 plugins: {
                   datalabels: {
                     offset: (context) => {
                       switch (context.dataIndex) {
                         case 0:
-                          return -1;
+                          return -1 * Scale;
                         case 1:
-                          return 5;
+                          return 5 * Scale;
                         case 2:
-                          return 5;
+                          return 5 * Scale;
                         default:
                           return 0;
                       }
@@ -255,7 +270,7 @@ const ChordWheel: NextPage = () => {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 6 * SCALE,
+                      size: 6 * Scale,
                     },
                     rotation: (context) => {
                       const index = context.dataIndex;
@@ -291,7 +306,7 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: 7.5 + 30 * spin,
                 cutout: '66.66666666667%',
-                radius: 225 * SCALE,
+                radius: 225 * Scale,
               }}
               data={{
                 labels: [
@@ -362,7 +377,7 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: -45,
                 cutout: '53.33333333333%',
-                radius: 150 * SCALE,
+                radius: 150 * Scale,
                 plugins: {
                   datalabels: {
                     display: (context) =>
@@ -370,13 +385,13 @@ const ChordWheel: NextPage = () => {
                     offset: (context) => {
                       switch (context.dataIndex) {
                         case 0:
-                          return -19;
+                          return -13 * Scale;
                         case 1:
-                          return 7;
+                          return 5 * Scale;
                         case 2:
-                          return -8;
+                          return -6 * Scale;
                         default:
-                          return 0;
+                          return 1 * Scale;
                       }
                     },
                     anchor: 'end',
@@ -384,7 +399,7 @@ const ChordWheel: NextPage = () => {
                     color: highlighttext,
                     textAlign: 'center',
                     font: {
-                      size: 6 * SCALE,
+                      size: 6 * Scale,
                     },
                     rotation: (context) => {
                       const index = context.dataIndex;
@@ -426,11 +441,11 @@ const ChordWheel: NextPage = () => {
               options={{
                 rotation: 15 + 30 * spin,
                 cutout: '53.33333333333%',
-                radius: 150 * SCALE,
+                radius: 150 * Scale,
                 plugins: {
                   datalabels: {
                     font: {
-                      size: 18 * SCALE,
+                      size: 18 * Scale,
                     },
                   },
                 },
